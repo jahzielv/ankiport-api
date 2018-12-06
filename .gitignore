@@ -1,0 +1,8 @@
+genanki/
+*.apkg
+__pycache__/
+.vscode/
+loading.py
+creds.txt
+.DS_Store
+*.json
