@@ -1,4 +1,5 @@
 from flask import Flask
+import json
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ def hello():
 
 @app.route("/yeet")
 def yeet():
-    return "yeet"
+    return json.dumps({"good_word": "to HELL with georgia!"})
 
 
 if __name__ == '__main__':
