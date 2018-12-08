@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 import json
 import ankiport_core.quizlet_helper as qh
 
@@ -18,6 +19,14 @@ def yeet():
 @app.route("/test")
 def test():
     return qh.apiTest("hello ")
+
+
+@app.route('/query-example', methods=['POST'])
+def query_example():
+    # if key doesn't exist, returns None
+    language = request.args.get('language')
+
+    return '''<h1>The language value is: {}</h1>'''.format(language)
 
 
 if __name__ == '__main__':
