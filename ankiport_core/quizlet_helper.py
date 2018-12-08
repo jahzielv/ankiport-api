@@ -6,7 +6,7 @@ import time
 import os
 import genanki
 import random
-import gen_helper
+import ankiport_core.gen_helper as gen_helper
 
 DEBUG = 0
 
@@ -91,6 +91,10 @@ def debug():
     # port("jahziel_villasana8", "2110 Final Exam")
     # my_notes = [gen_helper.makeNote()]
     # gen_helper.makeDeck("yote deck", my_notes)
+
+
+def apiTest(string):
+    return string * 4
 
 
 if DEBUG == 1:
