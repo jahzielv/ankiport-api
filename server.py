@@ -31,15 +31,11 @@ def query_example():
 
 @app.route("/port", methods=["POST"])
 def portQ():
-    # setName = request.args.get("setName")
-    # usrName = request.args.get("usrName")
-    # print(usrName)
-    # print(setName)
     setID = request.args.get("setID")
 
-    worked = qh.portSet(setID)  # qh.port(usrName, setName)
-    if (worked):
-        return "<h3>Successfully ported set {}</h3>".format(setID)
+    portResults = qh.portSet(setID)
+    if (portResults[0]):
+        return "<h3>Successfully ported set {}</h3>".format(portResults[1])
     else:
         return "<h3>Port failed :(</h3>"
 

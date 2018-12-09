@@ -42,55 +42,6 @@ def creds_file_exists():
         return False
 
 
-def verify_creds(usr_name):
-    gotCreds = creds_file_exists()
-    if (not gotCreds):
-        print("failed at 46")
-        return False
-    url2 = "https://api.quizlet.com/2.0/users/{0}/sets?client_id={1}&whitespace=1".format(
-        usr_name, CLIENT_ID)
-    # try to connect to the api; this will either return a 401 (bad login)
-    # or the JSON with all the user's stuff.
-    apiResponse = requests.get(url2)
-    if apiResponse.status_code:
-        # json representation of all the user's sets
-        # return json.loads(apiResponse.text)
-        return True
-    else:
-        print("failed at 57")
-        return False
-
-
-def port(usr_name, set_name):
-    all_sets = verify_creds(usr_name)
-    if DEBUG == 1:
-        print(all_sets)
-    if (all_sets == None):
-        print("failed at 64")
-        return False  # TODO: make this raise a custom exception
-
-    # Get the index of the set we're looking for
-    index = 0
-    for user_set in all_sets:
-        if user_set["title"] == set_name:
-            break
-        index = index + 1
-    if index >= len(all_sets):
-        return False
-
-    # Extract all the notes from the set
-    notes = []
-    for term in all_sets[index]['terms']:
-        if DEBUG == 1:
-            continue
-        else:
-            notes.append(gen_helper.makeNote(term['term'], term['definition']))
-
-    # Make the Anki deck!
-    gen_helper.makeDeck(set_name, notes)
-    return True
-
-
 def getSet(setID):
     creds_file_exists()
     apiUrl = "https://api.quizlet.com/2.0/sets/{0}?client_id={1}&whitespace=1".format(setID,
@@ -117,7 +68,7 @@ def portSet(setID):
 
     # Make the Anki deck!
     gen_helper.makeDeck(set_name, notes)
-    return True
+    return (True, set_name)
 
 
 def debug():
