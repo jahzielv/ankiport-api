@@ -57,7 +57,7 @@ def portSet(setID):
     qSet = getSet(setID)
     print(qSet)
     if (qSet == None):
-        return None
+        return (False, "FAILED")
     notes = []
     set_name = qSet["title"]
     for term in qSet['terms']:
