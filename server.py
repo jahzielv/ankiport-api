@@ -29,5 +29,19 @@ def query_example():
     return '''<h1>The language value is: {}</h1>'''.format(language)
 
 
+@app.route("/port", methods=["POST"])
+def portQ():
+    setName = request.args.get("setName")
+    usrName = request.args.get("usrName")
+    print(usrName)
+    print(setName)
+
+    worked = qh.port(usrName, setName)
+    if (worked):
+        return "<h3>Successfully ported set {}</h3>".format(setName)
+    else:
+        return "<h3>Port failed :(</h3>"
+
+
 if __name__ == '__main__':
     app.run(debug=True)

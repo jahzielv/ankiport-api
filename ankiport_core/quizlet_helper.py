@@ -19,6 +19,7 @@ SECRET_KEY = ""
 def find(name, path):
     for root, dirs, files in os.walk(path):
         if name in files:
+            print("found")
             return os.path.join(root, name)
         else:
             return None
@@ -28,18 +29,24 @@ def find(name, path):
 
 
 def creds_file_exists():
-    if (find("creds.txt", "./") != None):
-        with open("creds.txt", 'r') as creds_file:
+    if (find("creds.txt", "./secrets") != None):
+        with open("./secrets/creds.txt", 'r') as creds_file:
             global CLIENT_ID
             CLIENT_ID = creds_file.readline().replace("\n", "")
             global SECRET_KEY
             SECRET_KEY = creds_file.readline().replace("\n", "")
+            print("id: " + CLIENT_ID)
             return True
     else:
+        print("didn't find the file")
         return False
 
 
 def verify_creds(usr_name):
+    gotCreds = creds_file_exists()
+    if (not gotCreds):
+        print("failed at 46")
+        return None
     url2 = "https://api.quizlet.com/2.0/users/{0}/sets?client_id={1}&whitespace=1".format(
         usr_name, CLIENT_ID)
     # try to connect to the api; this will either return a 401 (bad login)
@@ -49,6 +56,7 @@ def verify_creds(usr_name):
         # json representation of all the user's sets
         return json.loads(apiResponse.text)
     else:
+        print("failed at 57")
         return None
 
 
@@ -57,6 +65,7 @@ def port(usr_name, set_name):
     if DEBUG == 1:
         print(all_sets)
     if (all_sets == None):
+        print("failed at 64")
         return False  # TODO: make this raise a custom exception
 
     # Get the index of the set we're looking for
@@ -98,4 +107,5 @@ def apiTest(string):
 
 
 if DEBUG == 1:
-    debug()
+    # debug()
+    find("creds.txt", "./")
