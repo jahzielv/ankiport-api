@@ -46,7 +46,7 @@ def verify_creds(usr_name):
     gotCreds = creds_file_exists()
     if (not gotCreds):
         print("failed at 46")
-        return None
+        return False
     url2 = "https://api.quizlet.com/2.0/users/{0}/sets?client_id={1}&whitespace=1".format(
         usr_name, CLIENT_ID)
     # try to connect to the api; this will either return a 401 (bad login)
@@ -54,10 +54,11 @@ def verify_creds(usr_name):
     apiResponse = requests.get(url2)
     if apiResponse.status_code:
         # json representation of all the user's sets
-        return json.loads(apiResponse.text)
+        # return json.loads(apiResponse.text)
+        return True
     else:
         print("failed at 57")
-        return None
+        return False
 
 
 def port(usr_name, set_name):
@@ -80,6 +81,35 @@ def port(usr_name, set_name):
     # Extract all the notes from the set
     notes = []
     for term in all_sets[index]['terms']:
+        if DEBUG == 1:
+            continue
+        else:
+            notes.append(gen_helper.makeNote(term['term'], term['definition']))
+
+    # Make the Anki deck!
+    gen_helper.makeDeck(set_name, notes)
+    return True
+
+
+def getSet(setID):
+    creds_file_exists()
+    apiUrl = "https://api.quizlet.com/2.0/sets/{0}?client_id={1}&whitespace=1".format(setID,
+                                                                                      CLIENT_ID)
+    apiResponse = requests.get(apiUrl)
+    if apiResponse.status_code:
+        return json.loads(apiResponse.text)
+    else:
+        return None
+
+
+def portSet(setID):
+    qSet = getSet(setID)
+    print(qSet)
+    if (qSet == None):
+        return None
+    notes = []
+    set_name = qSet["title"]
+    for term in qSet['terms']:
         if DEBUG == 1:
             continue
         else:
