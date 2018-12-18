@@ -6,3 +6,4 @@ loading.py
 creds.txt
 .DS_Store
 *.json
+secrets/
