@@ -8,8 +8,6 @@ import genanki
 import random
 import ankiport_core.gen_helper as gen_helper
 
-DEBUG = 0
-
 CLIENT_ID = ""
 SECRET_KEY = ""
 
@@ -24,8 +22,7 @@ def find(name, path):
         else:
             return None
 
-# Verifies that you have a creds.txt file. Very unsafe, should probably
-# be encrypted. I'll fix that soon.
+# Verifies that you have a creds.txt file.
 
 
 def creds_file_exists():
@@ -47,24 +44,20 @@ def getSet(setID):
     apiUrl = "https://api.quizlet.com/2.0/sets/{0}?client_id={1}&whitespace=1".format(setID,
                                                                                       CLIENT_ID)
     apiResponse = requests.get(apiUrl)
-    if apiResponse.status_code:
-        return json.loads(apiResponse.text)
-    else:
+    if apiResponse.status_code == 404:
         return None
+    else:
+        return json.loads(apiResponse.text)
 
 
 def portSet(setID):
     qSet = getSet(setID)
-    print(qSet)
     if (qSet == None):
-        return (False, "FAILED")
+        return (False, 404)
     notes = []
     set_name = qSet["title"]
     for term in qSet['terms']:
-        if DEBUG == 1:
-            continue
-        else:
-            notes.append(gen_helper.makeNote(term['term'], term['definition']))
+        notes.append(gen_helper.makeNote(term['term'], term['definition']))
 
     # Make the Anki deck!
     gen_helper.makeDeck(set_name, notes)
@@ -72,21 +65,10 @@ def portSet(setID):
 
 
 def debug():
-    # testing()
-    # spinCurse()
 
     if not creds_file_exists():
         print("Verification failed")
-    # verify_creds("jahziel_villasana8")
-    # port("jahziel_villasana8", "2110 Final Exam")
-    # my_notes = [gen_helper.makeNote()]
-    # gen_helper.makeDeck("yote deck", my_notes)
 
 
 def apiTest(string):
     return string * 4
-
-
-if DEBUG == 1:
-    # debug()
-    find("creds.txt", "./")
