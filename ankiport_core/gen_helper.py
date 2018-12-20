@@ -1,6 +1,7 @@
 import genanki
 import random
 import json
+import io
 
 
 def gen_id():
@@ -54,6 +55,9 @@ def makeDeckGAE(deckName, notes):
     storage bucket instead.
     '''
     my_deck = genanki.Deck(gen_id(), deckName)
+    deck_bytes = io.BytesIO()
+
     for note in notes:
         my_deck.add_note(note)
-    genanki.Package(my_deck).write_to_file(deckName + ".apkg")
+    genanki.Package(my_deck).write_to_file(deck_bytes)
+    return deck_bytes

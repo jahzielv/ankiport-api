@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import send_file
 from flask import send_from_directory
+from flask import make_response
 from flask_cors import CORS, cross_origin
 import json
 import os
@@ -27,8 +28,9 @@ def portQ():
 
     portResults = qh.portSet(setID)
     if (portResults[0]):
-        response = send_from_directory(
-            os.getcwd(), portResults[1] + ".apkg", as_attachment=True)
+        # response = send_from_directory(
+        #     os.getcwd(), portResults[1] + ".apkg", as_attachment=True)
+        response = make_response(portResults[2].getvalue())
 
         response.headers["x-filename"] = portResults[1] + ".apkg"
         response.headers["Access-Control-Expose-Headers"] = 'x-filename'
