@@ -28,8 +28,8 @@ def portQ():
 
     portResults = qh.portSet(setID)
     if (portResults[0]):
-        # response = send_from_directory(
-        #     os.getcwd(), portResults[1] + ".apkg", as_attachment=True)
+        # Use make_response because it can take bytes as an arg to create the body
+        # of our response.
         response = make_response(portResults[2].getvalue())
 
         response.headers["x-filename"] = portResults[1] + ".apkg"
@@ -37,6 +37,10 @@ def portQ():
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers["Access-Control-Allow-Headers"] = "Origin, X-Requested-With, contentType,Content-Type, Accept, Authorization"
         response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,OPTIONS,POST,PUT"
+        # The content-disposition header tells the client to download
+        # the response with the given filename.
+        cd = 'attachment; filename=' + portResults[1] + ".apkg"
+        response.headers['Content-Disposition'] = cd
 
         return response
     else:

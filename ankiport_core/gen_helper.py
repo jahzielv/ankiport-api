@@ -48,11 +48,10 @@ def makeDeck(deckName, notes):
     genanki.Package(my_deck).write_to_file(deckName + ".apkg")
 
 
-def makeDeckGAE(deckName, notes):
+def makeDeckBytes(deckName, notes):
     '''
-    Use this method when app is deployed to Google App Engine.
-    GAE doesn't let you write to disk, so you have to write to a
-    storage bucket instead.
+    Creates a deck with the given list of notes. Returns a BytesIO object
+    containing all the binary data of the Anki deck.
     '''
     my_deck = genanki.Deck(gen_id(), deckName)
     deck_bytes = io.BytesIO()
