@@ -60,15 +60,5 @@ def portSet(setID):
         notes.append(gen_helper.makeNote(term['term'], term['definition']))
 
     # Make the Anki deck!
-    gen_helper.makeDeck(set_name, notes)
-    return (True, set_name)
-
-
-def debug():
-
-    if not creds_file_exists():
-        print("Verification failed")
-
-
-def apiTest(string):
-    return string * 4
+    ret_bytes = gen_helper.makeDeckBytes(set_name, notes)
+    return (True, set_name, ret_bytes)

@@ -1,6 +1,7 @@
 import genanki
 import random
 import json
+import io
 
 
 def gen_id():
@@ -45,3 +46,17 @@ def makeDeck(deckName, notes):
     for note in notes:
         my_deck.add_note(note)
     genanki.Package(my_deck).write_to_file(deckName + ".apkg")
+
+
+def makeDeckBytes(deckName, notes):
+    '''
+    Creates a deck with the given list of notes. Returns a BytesIO object
+    containing all the binary data of the Anki deck.
+    '''
+    my_deck = genanki.Deck(gen_id(), deckName)
+    deck_bytes = io.BytesIO()
+
+    for note in notes:
+        my_deck.add_note(note)
+    genanki.Package(my_deck).write_to_file(deck_bytes)
+    return deck_bytes
