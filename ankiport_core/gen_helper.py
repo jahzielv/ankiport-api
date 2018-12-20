@@ -45,3 +45,15 @@ def makeDeck(deckName, notes):
     for note in notes:
         my_deck.add_note(note)
     genanki.Package(my_deck).write_to_file(deckName + ".apkg")
+
+
+def makeDeckGAE(deckName, notes):
+    '''
+    Use this method when app is deployed to Google App Engine.
+    GAE doesn't let you write to disk, so you have to write to a
+    storage bucket instead.
+    '''
+    my_deck = genanki.Deck(gen_id(), deckName)
+    for note in notes:
+        my_deck.add_note(note)
+    genanki.Package(my_deck).write_to_file(deckName + ".apkg")

@@ -16,6 +16,11 @@ def hello():
     return "<h2>Welcome to the Ankiport api!</h2>"
 
 
+@app.route("/test")
+def test():
+    return json.dumps({"this_page": "API test"})
+
+
 @app.route("/port")
 def portQ():
     setID = request.args.get("setID")
