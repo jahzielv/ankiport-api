@@ -7,3 +7,4 @@ creds.txt
 .DS_Store
 *.json
 secrets/
+.pytest_cache/
