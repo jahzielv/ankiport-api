@@ -17,7 +17,6 @@ SECRET_KEY = ""
 def find(name, path):
     for root, dirs, files in os.walk(path):
         if name in files:
-            print("found")
             return os.path.join(root, name)
         else:
             return None
@@ -32,10 +31,9 @@ def creds_file_exists():
             CLIENT_ID = creds_file.readline().replace("\n", "")
             global SECRET_KEY
             SECRET_KEY = creds_file.readline().replace("\n", "")
-            print("id: " + CLIENT_ID)
             return True
     else:
-        print("didn't find the file")
+        print("didn't find the creds file")
         return False
 
 
