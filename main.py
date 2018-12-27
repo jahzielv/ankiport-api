@@ -47,5 +47,9 @@ def portQ():
         return json.dumps({"status_code": portResults[1], "message": "Port failed. Check your set ID number!"}, indent=4)
 
 
+def getApp():
+    return app
+
+
 if __name__ == '__main__':
     app.run(debug=True)
