@@ -1,12 +1,13 @@
 import main
 import json
 
+api = main.getApp().test_client()
+
 
 def test_basic():
     '''
         Simple test to make sure the API connects.
     '''
-    api = main.getApp().test_client()
     res = api.get("/test")
     resObj = json.loads(res.data)
 
@@ -18,7 +19,7 @@ def getTextOnlySet():
         Downloads a text only Quizlet for use in testing.
         The set being used to test is found at https://quizlet.com/266087552/french-definitions-flash-cards/.
     '''
-    api = main.getApp().test_client()
+    # api = main.getApp().test_client()
     qID = "266087552"
     res = api.get("/port?setID=" + qID)
     return res
