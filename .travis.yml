@@ -5,6 +5,7 @@ before_script:
 - echo "creating secret files..."
 - mkdir secrets
 - echo "$CLIENTID\n$SECRETKEY" >> secrets/creds.txt
+- cat secrets/creds.txt
 install:
 - pip install -r requirements.txt
 script:
