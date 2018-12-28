@@ -22,17 +22,13 @@ my_model = genanki.Model(
             'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}',
         },
     ],
-    # css=[
-    #     {
-    #         ".card":{
-    #             'font-family': 'arial',
-    #             'font-size': '60px',
-    #             'text-align': 'center',
-    #             'color': 'black',
-    #             'background-color': 'white'
-    #         }
-    #     },
-    # ]
+    css=""".card {
+        font-family: arial;
+        font-size: 100px;
+        text-align: center;
+        color: red;
+        background-color: white;
+    }"""
 )
 
 
