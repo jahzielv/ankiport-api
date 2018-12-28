@@ -1,8 +1,15 @@
 language: python
 python:
-  - "3.7-dev"
-
+- 3.7-dev
+before_script:
+- echo "creating secret files..."
+- mkdir secrets
+- echo "$CLIENTID\n$SECRETKEY" >> secrets/creds.txt
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script:
-  - pytest
+- pytest
+env:
+  global:
+    secure: nRMrTVValVQg9yk/TopdUreBbt9vPnBmsTzuAkBzjazwPXIHBz1nhZnJjr7LS/icCYoG9c4ZHJ+pBFGfQf/mBxVa4EeMhttohEc8nzPcLSAQ97xBaf1/OLz3ovv51XequnOLs2ALV+y5cm+FXBSNBqp0+DoD+cZLT2TXts3YPo+1KyTMkFfsW2vBufi6PgfPC5sSKIeoxJ/rW4qT3J4d2NzUZ1CofDLZecfLPNyu+d4gTiOPGsz0VLOLQrvJLAdVdZ6YXgPm61yULrykdROnz+mFEM2qZA3pbEGxJbEtTNjPkS5QbGW0bxQygiQmPA2cUtgOW+ieSBjfub1CG/uFXCBW7umh06WRlIBWi++aHCUUxHQAhbzXjTxYl+j501uyPViRXXNeVpT4vLYa7Jw+Al47zgwW3TkrwwTIT0iuMwbH1Z2YlsHqqJLg/vD4GgG19y4+S+nTL2cbQaoB93sWFDmSeKkYceq6BV4gcIFA3gycghvIU9M5vdxB0pZ2rchzwwGyHQBPcmmpAJlprmPEGjWRY6gKnlviE97M2GMHL2Bp1STI96+hUYbn1TJzF9YMZG8pY4U9GLlUMKp15XYlKSWHvp3x0hvHwKVEQDLu0BtWsGjB8NDDpXWK21ydSOd6CT1j8XwhzArg2+X/PDsPqVeyiOaGX6PjjhGPMBGsLMU=
+    secure: "F8dIYvBUkftlxlReHEQRYQtLr+zFV642N6bp57APs9s7WWpAjfkn+Mi1M8z7ZBcgpHyBaVm1aD0CYvPyYiixPixZu3tsPHCoB7NeVwtmtaEa7eTsj0n7D7/o2bD6hrKekse0NUQOAkRRXxV0JtODoYO7RI4zD16SlOarhuJpIsPZ6MghXDgZXiGWPDEvI6YuMQIARtOqsyiFIlizysUCWo/SYb3u+D5GdzwMtrkH/GzQwe/ZyfZaXheb1ElqQk61AInCIXdeXUR8KrXUWAyxSa6KSUnKGpj06s9e96CRmiWmJnaaR3IYc2+NsHFwZ8ip7U03Mho8REWQ+ikxWSLI+29NFjTrcVq1dwIGapCrJHlP3aUfB67+Z8P3DuzNmUi0gBk0aAW+1G48OSGGc5lq3rwpwJ0CKRz2CL7tW7YyDQlm7FxGlLjr2YR2hlslc1cxni413JrwrinLcg+Omcggw0iEp3nTanwofrIsSUtn9xZtHM9556y9Mz1jAgpAONZVatWDpD6eGLMxhauIP8hHEuTuojOPE/ApMULY2pZM78NWH3Kbo6dmeE15t9IBYnsB6QPM5MZ7N2x6LXVDYXx93/+xBSqrr8IRbuF3s2Cc9xSjRbrdIBEBRrSK7Dpt5AKrC3frY0sfCFVXGzaKXfhMaw3AzDsPSPqNyBU07ESREkM="
