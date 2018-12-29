@@ -10,7 +10,18 @@ def gen_id():
 
 class DeckGenerator:
 
+    defaultCss = """.card {
+            font-family: arial;
+            font-size: 100px;
+            text-align: center;
+            color: black;
+            background-color: white;
+        }"""
+
     def __init__(self):
+        pass
+
+    def createModel(self, myCss=defaultCss):
         self.my_model = genanki.Model(
             gen_id(),
             'Simple Model',
@@ -25,20 +36,8 @@ class DeckGenerator:
                     'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}',
                 },
             ],
-            css=""".card {
-            font-family: arial;
-            font-size: 100px;
-            text-align: center;
-            color: red;
-            background-color: white;
-        }"""
+            css=myCss
         )
-
-    def makeCss(self, jsonDict):
-        """
-            Takes a JSON object (a dict) and turns it into a string for loading
-            into genanki.
-        """
 
     def makeNote(self, question, answer):
         my_note = genanki.Note(model=self.my_model, fields=[question, answer])

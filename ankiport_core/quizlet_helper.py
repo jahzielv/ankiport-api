@@ -15,6 +15,13 @@ SECRET_KEY = ""
 deckGen = DeckGenerator()
 
 
+def makeCss(self, jsonDict):
+    """
+        Takes a JSON object (a dict) and turns it into a string for loading
+        into genanki.
+    """
+
+
 def find(name, path):
     """
         Looks for a given file in a given directory.
