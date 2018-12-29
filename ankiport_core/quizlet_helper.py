@@ -6,25 +6,30 @@ import time
 import os
 import genanki
 import random
-import ankiport_core.gen_helper as gen_helper
+from ankiport_core.gen_helper import DeckGenerator
 
 CLIENT_ID = ""
 SECRET_KEY = ""
 
-# Looks for a given file in a given directory.
+
+deckGen = DeckGenerator()
 
 
 def find(name, path):
+    """
+        Looks for a given file in a given directory.
+    """
     for root, dirs, files in os.walk(path):
         if name in files:
             return os.path.join(root, name)
         else:
             return None
 
-# Verifies that you have a creds.txt file.
-
 
 def creds_file_exists():
+    """
+        Verifies that you have a creds.txt file.
+    """
     if (find("creds.txt", "./secrets") != None):
         with open("./secrets/creds.txt", 'r') as creds_file:
             global CLIENT_ID
@@ -55,8 +60,8 @@ def portSet(setID):
     notes = []
     set_name = qSet["title"]
     for term in qSet['terms']:
-        notes.append(gen_helper.makeNote(term['term'], term['definition']))
+        notes.append(deckGen.makeNote(term['term'], term['definition']))
 
     # Make the Anki deck!
-    ret_bytes = gen_helper.makeDeckBytes(set_name, notes)
+    ret_bytes = deckGen.makeDeckBytes(set_name, notes)
     return (True, set_name, ret_bytes)

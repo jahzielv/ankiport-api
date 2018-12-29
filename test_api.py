@@ -1,5 +1,6 @@
 import main
 import json
+import ankiport_core
 
 api = main.getApp().test_client()
 
