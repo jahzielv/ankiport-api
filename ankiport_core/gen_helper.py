@@ -34,7 +34,8 @@ my_model = genanki.Model(
 
 def makeCss(jsonDict):
     """
-
+        Takes a JSON object (a dict) and turns it into a string for loading
+        into genanki.
     """
 
 
