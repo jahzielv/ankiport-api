@@ -32,6 +32,12 @@ my_model = genanki.Model(
 )
 
 
+def makeCss(jsonDict):
+    """
+
+    """
+
+
 def makeNote(question, answer):
     my_note = genanki.Note(model=my_model, fields=[question, answer])
     return my_note
