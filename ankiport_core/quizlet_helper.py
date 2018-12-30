@@ -13,6 +13,7 @@ SECRET_KEY = ""
 
 
 deckGen = DeckGenerator()
+deckGen.createModel()
 
 
 def makeCss(self, jsonDict):

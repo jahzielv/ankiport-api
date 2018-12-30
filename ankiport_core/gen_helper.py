@@ -12,7 +12,7 @@ class DeckGenerator:
 
     defaultCss = """.card {
             font-family: arial;
-            font-size: 100px;
+            font-size: 40px;
             text-align: center;
             color: black;
             background-color: white;
