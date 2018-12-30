@@ -13,14 +13,22 @@ SECRET_KEY = ""
 
 
 deckGen = DeckGenerator()
-deckGen.createModel()
 
 
-def makeCss(self, jsonDict):
+def makeCss(jsonDict):
     """
         Takes a JSON object (a dict) and turns it into a string for loading
         into genanki.
     """
+    retStr = ""
+    dictGuts = list(jsonDict.items())
+    retStr += dictGuts[0][0]
+    retStr += "{"
+    innerDictGuts = list(dictGuts[0][1].items())
+    for attribute in innerDictGuts:
+        retStr += attribute[0] + ":" + attribute[1] + ";"
+    retStr += "}"
+    return retStr
 
 
 def find(name, path):
@@ -61,12 +69,16 @@ def getSet(setID):
         return json.loads(apiResponse.text)
 
 
-def portSet(setID):
+def portSet(setID, usrCss):
     qSet = getSet(setID)
     if (qSet == None):
         return (False, 404)
     notes = []
     set_name = qSet["title"]
+    if (usrCss != None):
+        deckGen.createModel(usrCss)
+    else:
+        deckGen.createModel()
     for term in qSet['terms']:
         notes.append(deckGen.makeNote(term['term'], term['definition']))
 
