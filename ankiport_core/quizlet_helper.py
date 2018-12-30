@@ -22,10 +22,9 @@ def makeCss(jsonDict):
     """
     retStr = ""
     dictGuts = list(jsonDict.items())
-    retStr += dictGuts[0][0]
-    retStr += "{"
-    innerDictGuts = list(dictGuts[0][1].items())
-    for attribute in innerDictGuts:
+    retStr += ".card{"
+    # innerDictGuts = list(dictGuts[0][1].items())
+    for attribute in dictGuts:
         retStr += attribute[0] + ":" + attribute[1] + ";"
     retStr += "}"
     return retStr
@@ -76,7 +75,7 @@ def portSet(setID, usrCss):
     notes = []
     set_name = qSet["title"]
     if (usrCss != None):
-        deckGen.createModel(usrCss)
+        deckGen.createModel(makeCss(usrCss))
     else:
         deckGen.createModel()
     for term in qSet['terms']:

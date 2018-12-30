@@ -26,13 +26,16 @@ def test():
 def portQ():
     setID = request.args.get("setID")
 
-    portResults = qh.portSet(setID,  """.card {
-            font-family: arial;
-            font-size: 100px;
-            text-align: center;
-            color: red;
-            background-color: white;
-        }""")
+    print("REQUEST BODY: " + str(list(request.form.items())))
+
+    # portResults = qh.portSet(setID,  """.card {
+    #         font-family: arial;
+    #         font-size: 100px;
+    #         text-align: center;
+    #         color: red;
+    #         background-color: white;
+    #     }""")
+    portResults = qh.portSet(setID, request.form)
     if (portResults[0]):
         # Use make_response because it can take bytes as an arg to create the body
         # of our response.

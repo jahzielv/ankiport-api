@@ -49,7 +49,7 @@ def test_TextOnly_Size():
 
 
 def test_css():
-    x = {".card": {"font-family": "arial", "color": "green"}}
+    x = {"font-family": "arial", "color": "green"}
     actualVal = ankiport_core.quizlet_helper.makeCss(x)
     expected = ".card{font-family:arial;color:green;}"
     assert expected == actualVal
