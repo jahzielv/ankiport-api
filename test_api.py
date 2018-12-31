@@ -26,6 +26,13 @@ def getTextOnlySet():
     return res
 
 
+def getTextOnlyCss():
+    qID = "266087552"
+    myCss = {"font-family": "arial", "color": "green"}
+    res = api.post("/port?setID=" + qID, data=myCss)
+    return res
+
+
 def test_TextOnly_Name():
     '''
         Testing the download of a text only Quizlet set.
@@ -33,7 +40,6 @@ def test_TextOnly_Name():
     '''
     expectedFileName = "french definitions.apkg"
     res = getTextOnlySet()
-    print(str(res.headers))
 
     assert res.headers["x-filename"] == expectedFileName
 
@@ -50,7 +56,6 @@ def test_TextOnly_Size():
 
 
 def test_css():
-    x = {"font-family": "arial", "color": "green"}
-    actualVal = ankiport_core.quizlet_helper.makeCss(x)
-    expected = ".card{font-family:arial;color:green;}"
-    assert expected == actualVal
+    res = getTextOnlyCss()
+    expectedFileName = "french definitions.apkg"
+    assert res.headers["x-filename"] == expectedFileName
