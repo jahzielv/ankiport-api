@@ -22,7 +22,7 @@ def getTextOnlySet():
     '''
     # api = main.getApp().test_client()
     qID = "266087552"
-    res = api.get("/port?setID=" + qID)
+    res = api.post("/port?setID=" + qID)
     return res
 
 
@@ -33,6 +33,7 @@ def test_TextOnly_Name():
     '''
     expectedFileName = "french definitions.apkg"
     res = getTextOnlySet()
+    print(str(res.headers))
 
     assert res.headers["x-filename"] == expectedFileName
 
