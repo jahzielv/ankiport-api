@@ -6,36 +6,54 @@ import time
 import os
 import genanki
 import random
-import ankiport_core.gen_helper as gen_helper
+from ankiport_core.gen_helper import DeckGenerator
 
 CLIENT_ID = ""
 SECRET_KEY = ""
 
-# Looks for a given file in a given directory.
+
+deckGen = DeckGenerator()
+
+
+def makeCss(jsonDict):
+    """
+        Takes a JSON object (a dict) and turns it into a string for loading
+        into genanki.
+    """
+    retStr = ""
+    dictGuts = list(jsonDict.items())
+    retStr += ".card{"
+    # innerDictGuts = list(dictGuts[0][1].items())
+    for attribute in dictGuts:
+        retStr += attribute[0] + ":" + attribute[1] + ";"
+    retStr += "}"
+    return retStr
 
 
 def find(name, path):
+    """
+        Looks for a given file in a given directory.
+    """
     for root, dirs, files in os.walk(path):
         if name in files:
-            print("found")
             return os.path.join(root, name)
         else:
             return None
 
-# Verifies that you have a creds.txt file.
-
 
 def creds_file_exists():
+    """
+        Verifies that you have a creds.txt file.
+    """
     if (find("creds.txt", "./secrets") != None):
         with open("./secrets/creds.txt", 'r') as creds_file:
             global CLIENT_ID
             CLIENT_ID = creds_file.readline().replace("\n", "")
             global SECRET_KEY
             SECRET_KEY = creds_file.readline().replace("\n", "")
-            print("id: " + CLIENT_ID)
             return True
     else:
-        print("didn't find the file")
+        print("didn't find the creds file")
         return False
 
 
@@ -50,15 +68,19 @@ def getSet(setID):
         return json.loads(apiResponse.text)
 
 
-def portSet(setID):
+def portSet(setID, usrCss):
     qSet = getSet(setID)
     if (qSet == None):
         return (False, 404)
     notes = []
     set_name = qSet["title"]
+    if (usrCss != None):
+        deckGen.createModel(makeCss(usrCss))
+    else:
+        deckGen.createModel()
     for term in qSet['terms']:
-        notes.append(gen_helper.makeNote(term['term'], term['definition']))
+        notes.append(deckGen.makeNote(term['term'], term['definition']))
 
     # Make the Anki deck!
-    ret_bytes = gen_helper.makeDeckBytes(set_name, notes)
+    ret_bytes = deckGen.makeDeckBytes(set_name, notes)
     return (True, set_name, ret_bytes)

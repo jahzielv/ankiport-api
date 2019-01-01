@@ -22,11 +22,14 @@ def test():
     return json.dumps({"this_page": "API test"})
 
 
-@app.route("/port")
+@app.route("/port", methods=["POST"])
 def portQ():
     setID = request.args.get("setID")
 
-    portResults = qh.portSet(setID)
+    portResults = qh.portSet(setID, request.form)
+
+    # portResults is a 3-tuple:
+    # (<portSuccessOrFailure>, <setName>, <setDataBytes>)
     if (portResults[0]):
         # Use make_response because it can take bytes as an arg to create the body
         # of our response.
@@ -45,6 +48,10 @@ def portQ():
         return response
     else:
         return json.dumps({"status_code": portResults[1], "message": "Port failed. Check your set ID number!"}, indent=4)
+
+
+def getApp():
+    return app
 
 
 if __name__ == '__main__':
